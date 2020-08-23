@@ -1,4 +1,4 @@
-MOST USED LIBRARY FUNCTIONS IN MACHINE LEARNING IMPLEMENTED FROM SCRATCH
+=== MOST USED LIBRARY FUNCTIONS IN MACHINE LEARNING IMPLEMENTED FROM SCRATCH
 
 I have written some of the most used functions and Libraries in ML:
 
@@ -9,3 +9,7 @@ I have written some of the most used functions and Libraries in ML:
 3) QR Decomposition of a matrix A
 
 4) Householder Decomposition of matrix A
+
+5) Linear Regression 
+
+6) Logistic Regression
