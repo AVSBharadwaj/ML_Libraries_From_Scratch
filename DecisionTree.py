@@ -1,6 +1,7 @@
 
+import numpy as np
 
-def split_point(X,y,column):
+def best_split_point(X,y,column):
 	ordering= np.argsort(X[:,column])
 
 	classes= y[ordering]
@@ -17,7 +18,7 @@ def split_point(X,y,column):
 	gini=class_1_below*class_0_below /( below_total**2)+class_1_above*class_0_above /( above_total**2)
 	gini[np.isnan(gini)]=1
 
-	bedt_split_rank=np.argmin(gini)
+	best_split_rank=np.argmin(gini)
 
 	best_split_gini=gini[best_split_rank]
 
@@ -75,14 +76,31 @@ class Node:
 	def predict_proba(self,row):
 
 		if self.is_leaf:
-			return self.probabilities
+			return self.probabilities()
 
 		else :
 			if row[self.column]<=self.split_point:
 				return self.child[0].predict_proba(row)
 
 			else:
-				return self.children[1].predict_proba(row)
+				return self.child[1].predict_proba(row)
 
 
-				
+class DecisionTreeClassifier:
+    def __init__(self, max_depth=3):
+        self.max_depth = int(max_depth)
+        self.root = None
+        
+    def fit(self, X, y):
+        self.root = Node(X, y)
+        self.root.split(self.max_depth)
+        
+    def predict_proba(self, X):
+        results = []
+        for row in X:
+            p = self.root.predict_proba(row)
+            results += [p]
+        return np.array(results)
+            
+    def predict(self, X):
+        return (self.predict_proba(X)[:, 1] > 0.5).astype(int)
